@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lol</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 id="title">What’s your position?</h1>
+  <form action="/submit" method="post">
+    <div class="menu" id="name.menu">NAME</div>
+    <input type="text" id="name" name="name" class="search" placeholder="이름 입력창">
+    <div class="menu" id="line.menu">LINE</div>
+    <select name="line" id="line" class="search" >
+      <option value="top">탑</option>
+      <option value="jpl">정글</option>
+      <option value="mid">미드</option>
+      <option value="bot">원딜</option>
+      <option value="spt">서포터</option>
+    </select>
+    <div class="menu" id="champion.menu">CHAMPION</div>
+    <input type="text" name="cham" id="cham" class="search"  placeholder="없는 이름 입력 시 넘어가지 않습니다.">
+    <input type="submit" id="submit" class="hidden" value="제출">
+  </form>
+  <script src="main.js" type="module"></script>
+</body>
+</html>
