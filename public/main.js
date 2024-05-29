@@ -2,9 +2,11 @@
 const nameMenu = document.getElementById('name.menu')
 const lineMenu = document.getElementById('line.menu')
 const championMenu = document.getElementById('champion.menu')
-const menus = [
-  nameMenu, lineMenu, championMenu
-]
+const menus = {
+  name: nameMenu,
+  line: lineMenu,
+  cham: championMenu
+};
 
 document.getElementById('name').addEventListener('input',sendReq);
 document.getElementById('line').addEventListener('input',sendReq);
@@ -30,9 +32,9 @@ async function sendReq(){
   })
   .then(res => {
     if(res.status == 200){
-      menuOn(true);
+      menuOn(elem.id, true);
     } else{
-      menuOn(false);
+      menuOn(elem.id, false);
     }
   })  
   .catch(err => {
@@ -43,10 +45,11 @@ async function sendReq(){
 
 /**
  * * 응답 시 반응 class 추가 삭제
+ * @param {string} id
  * @param {boolean} isTurnOn 
  */
-function menuOn(isTurnOn){
-  for(let menu of menus){
+function menuOn(id, isTurnOn){
+  const menu = menus[id];
     if(isTurnOn){
       menu.classList.add('menu100');
       menu.classList.remove('menu20');
@@ -55,5 +58,4 @@ function menuOn(isTurnOn){
       menu.classList.add('menu20');
       menu.classList.remove('menu100');
     }
-  }
 }
