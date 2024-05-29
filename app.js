@@ -59,7 +59,7 @@ function postMethod(req, res){
 
   req.on('data',  (data) => body += data );
   req.on('end', async () => {
-    
+    try{
     let elem =JSON.parse(body);
     let id = elem.id;
     let value = elem.value;
@@ -74,8 +74,13 @@ function postMethod(req, res){
 
     res.statusCode = 200;
     res.end();
-  })  
 
+  } catch (err) {
+    res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+    res.end(JSON.stringify({ error: "잘못된 요청입니다." }));
+    console.log("오류 발생:", err);
+  }
+  })  
 }
 
 //* 이름 검사 함수
@@ -121,45 +126,44 @@ for(let data in chamName){
 }
 
 
-  //*문서 형식에 따른 표기
-  const mimeType = {
-    ".html": "text/html; charset=utf-8",
-    ".css": "text/css",
-    ".js": "application/javascript",
-    ".json": "application/json",
-    ".ico": "image/x-icon",
-    ".jpg": "image/jpeg",
-    ".jpeg": "image/jpeg",
-    ".png": "image/png",
-    ".gif": "image/gif",
-  };
+//*문서 형식에 따른 표기
+const mimeType = {
+  ".html": "text/html; charset=utf-8",
+  ".css": "text/css",
+  ".js": "application/javascript",
+  ".json": "application/json",
+  ".ico": "image/x-icon",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".gif": "image/gif",
+};
 
-  //*url에 따른 파일 경로 결정 함수 객체
-  const fileUtils = {
-    //*매개변수 url에 따른 파일 경로 할당
-    getFilePath: function (url) {
-      // URL에 따라 파일 경로를 설정
-      if (url === "/") {
-        return path.join(__dirname, "./public/index.html");
-      } else {
-        return path.join(__dirname, `./public${url}`);
-      }
-    },
-    //*파일 경로에 따른 파일 확장자 가져오기
-    getFileExtension: function (filePath) {
-      //*파일 확장자를 가져오는 명령어
-      let ext = path.extname(filePath);
-      //*파일 확장자 소문자로 변환
-      return ext.toLowerCase();
-    },
-    //*파일 확장자에 따른 표기 반환
-    getContentType: function (ext) {
-      //*mimeType에 ext로 가져온 확장자가 있다면 표기 반환
-      if (mimeType.hasOwnProperty(ext)) {
-        return mimeType[ext];
-      } else {
-        return "text/plain";
-      }
-    },
-  };
-
+//*url에 따른 파일 경로 결정 함수 객체
+const fileUtils = {
+  //*매개변수 url에 따른 파일 경로 할당
+  getFilePath: function (url) {
+    // URL에 따라 파일 경로를 설정
+    if (url === "/") {
+      return path.join(__dirname, "./public/index.html");
+    } else {
+      return path.join(__dirname, `./public${url}`);
+    }
+  },
+  //*파일 경로에 따른 파일 확장자 가져오기
+  getFileExtension: function (filePath) {
+    //*파일 확장자를 가져오는 명령어
+    let ext = path.extname(filePath);
+    //*파일 확장자 소문자로 변환
+    return ext.toLowerCase();
+  },
+  //*파일 확장자에 따른 표기 반환
+  getContentType: function (ext) {
+    //*mimeType에 ext로 가져온 확장자가 있다면 표기 반환
+    if (mimeType.hasOwnProperty(ext)) {
+      return mimeType[ext];
+    } else {
+      return "text/plain";
+    }
+  },
+};
