@@ -17,7 +17,7 @@ document.getElementById('cham').addEventListener('input', sendReq);
 async function sendReq() {
   let elem = this;
   //http 요청 생성
-  await fetch("http://localhost:8080", {
+  await fetch("http://localhost:8080/check", {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
@@ -64,10 +64,3 @@ function menuOn(id, isTurnOn) {
     document.getElementById('submit').classList.add('hidden');
   }
 }
-
-  // document.getElementById('cham').value !== "" && menu.classList.value === "menu100"){
-  //   console.log('작동');
-  //   document.getElementById('submit').classList.remove('hidden');
-  // }
-
-
