@@ -38,38 +38,6 @@ const server = http.createServer((req, res) => {
 })
 
 
-function createJson(req, res) {
-  fs.readFile(path.join(__dirname, "./public/submit.html"), (err, data) => {
-    if (err) {
-      res.writeHead(500, { "Content-Type": "text/plain" });
-      res.end("500 code는 서버 자체의 에러");
-      return;
-    }
-    res.writeHead(200, {"Content-Type": "text/html;"});
-    res.end(data);
-  });
-  // request.on('end', () => {
-  //   const parseData = new URLSearchParams(body);
-  //   const title = parseData.get("title");
-  //   const content = parseData.get("content");
-  //   const jsonData = {
-  //     title: title,
-  //     content: content
-  //   };
-  //   for (let key in jsonData) {
-  //     if (key === "title") {
-  //       var a = `<h1>${jsonData[key]}</h1>`;
-  //     }
-  //     else if (key === "content") {
-  //       var b = `<h3>${jsonData[key]}</h3>`;
-  //     }
-  //   }
-
-  //   fs.writeFileSync(`./data/${todayDate()}-data.json`, all, "utf-8");
-
-  // })
-}
-
 
 /**
  * * get메서드
@@ -104,6 +72,8 @@ function postMethod(req, res) {
         let split = data.split("=");
         arrReqData[arrReqData.length] = new ReqData(split[0], split[1]);
       }
+
+      console.log(arrReqData);
       
       for(let reqData of arrReqData){
         console.log(reqData.id);
@@ -115,22 +85,6 @@ function postMethod(req, res) {
           chamCheck(reqData.value, res);
         }
       }
-
-      // let id = elem.id;
-      // let value = elem.value;
-      // if (id == "name") {
-      //   NameCheck(value, res);
-      // }
-
-      // if(id == "cham"){
-      //   chamCheck(value, res);
-      // }
-      // else if (id == "cham") {
-      //   chamCheck(value, res);
-      // }
-
-      // res.statusCode = 200;
-      // res.end();
       if(req.url === "/submit"){
         createJson(req, res);
       }
@@ -147,6 +101,18 @@ function postMethod(req, res) {
   })
 }
 
+function createJson(req, res) {
+  fs.readFile(path.join(__dirname, "./public/submit.html"), (err, data) => {
+    if (err) {
+      res.writeHead(500, { "Content-Type": "text/plain" });
+      res.end("500 code는 서버 자체의 에러");
+      return;
+    }
+    res.writeHead(200, {"Content-Type": "text/html;"});
+    res.end(data);
+  });
+}
+
 function postMethod_2(req, res) {
   let body = "";
 
@@ -157,6 +123,7 @@ function postMethod_2(req, res) {
   
       let id = elem.id;
       let value = elem.value;
+
       if (id == "name") {
         NameCheck(value, res);
       }
@@ -178,22 +145,12 @@ function postMethod_2(req, res) {
   })
 }
 
-
-
-
 //* 이름 검사 함수
 function NameCheck(value, res) {
   const name = memberNames.find(function (str) {
     return str === value;
   });
-  // if (name) {
-  //   res.statusCode = 200;
-  //   res.end();
-  // }
-  // else {
-  //   res.statusCode = 204;
-  //   res.end();
-  // }
+
   if(!name){
     throw new Error("이름이 없습니다.");
   }
@@ -209,8 +166,6 @@ function chamCheck(value, res) {
       for (let a in chamName[data]) {
         for (let b in chamName[data][a]) {
           if (b === 'name') {
-            // console.log(chamName[data][a][b]);
-            // let cham = [];
             chams.push(chamName[data][a][b]);
           }
         }
@@ -218,14 +173,6 @@ function chamCheck(value, res) {
     }
   }
   const cham = chams.find(str => str === value);
-  // if (cham) {
-  //   res.statusCode = 200;
-  //   res.end();
-  // }
-  // else {
-  //   res.statusCode = 204;
-  //   res.end();
-  // }
   if(!cham){
     throw new Error("존재하는 챔피언이 없습니다.");
   }
