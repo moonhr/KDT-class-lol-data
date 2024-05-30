@@ -4,9 +4,9 @@ const menus = {
   cham: document.getElementById('champion.menu')
 };
 
-document.getElementById('name').addEventListener('input',sendReq);
-document.getElementById('line').addEventListener('input',sendReq);
-document.getElementById('cham').addEventListener('input',sendReq);
+document.getElementById('name').addEventListener('input', sendReq);
+document.getElementById('line').addEventListener('input', sendReq);
+document.getElementById('cham').addEventListener('input', sendReq);
 
 // menus.key.addEventListener('input',sendReq);
 
@@ -14,7 +14,7 @@ document.getElementById('cham').addEventListener('input',sendReq);
  * * POST서버로 요청을 보내고 받은 응답으로 함수를 실행
  */
 //promise값을 반환하는 비동기 함수
-async function sendReq(){
+async function sendReq() {
   let elem = this;
   //http 요청 생성
   await fetch("http://localhost:8080", {
@@ -24,21 +24,21 @@ async function sendReq(){
     },
     //body에 json 문자열 반환
     body: JSON.stringify({
-      id : elem.id,
-      value : elem.value
+      id: elem.id,
+      value: elem.value
     }),
   })
-  .then(res => {
-    if(res.status == 200){
-      menuOn(elem.id, true);
-    } else{
-      menuOn(elem.id, false);
-    }
-  })
-  .catch(err => {
-    console.error("요청 중 오류 발생:", err);
-    menuOn(false);
-  });
+    .then(res => {
+      if (res.status == 200) {
+        menuOn(elem.id, true);
+      } else {
+        menuOn(elem.id, false);
+      }
+    })
+    .catch(err => {
+      console.error("요청 중 오류 발생:", err);
+      menuOn(false);
+    });
 }
 
 /**
@@ -46,14 +46,35 @@ async function sendReq(){
  * @param {string} id
  * @param {boolean} isTurnOn 
  */
-function menuOn(id, isTurnOn){
+function menuOn(id, isTurnOn) {
   const menu = menus[id];
-    if(isTurnOn){
-      menu.classList.add('menu100');
-      menu.classList.remove('menu20');
+  if (isTurnOn) {
+    menu.classList.add('menu100');
+    menu.classList.remove('menu20');
+  }
+  else {
+    menu.classList.add('menu20');
+    menu.classList.remove('menu100');
+  }
+console.dir(menu)
+  // todo 만들조건 : input태그에 값이 존재하는가? menu에 모두 menu100클래스가 들어있는가?
+
+  if (
+    document.getElementById('name').value !== undefined &&
+    document.getElementById('name').value !== null) {
+    console.log(1)
+    if (
+      document.getElementById('cham').value !== undefined &&
+      document.getElementById('cham').value !== null
+    ) {
+      console.log(2)
+      if (menu.classList.value === "menu menu100") {console.log('작동');}
     }
-    else{
-      menu.classList.add('menu20');
-      menu.classList.remove('menu100');
-    }
+  }
+
+  // document.getElementById('cham').value !== "" && menu.classList.value === "menu100"){
+  //   console.log('작동');
+  //   document.getElementById('submit').classList.remove('hidden');
+  // }
 }
+
