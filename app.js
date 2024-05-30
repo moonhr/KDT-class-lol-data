@@ -34,7 +34,6 @@ const server = http.createServer((req, res) => {
         postMethod(req, res);
       }
   }
-  console.log(req.url);
 })
 
 
@@ -64,29 +63,19 @@ function postMethod(req, res) {
   req.on('data', (data) => body += data);
   req.on('end', () => {
     try {
-      //let elem = JSON.parse(body);
       let arrData = decodeURI(body).split("&");
-      const arrReqData = [];
-      
-      for(let data of arrData){
-        let split = data.split("=");
-        arrReqData[arrReqData.length] = new ReqData(split[0], split[1]);
-      }
 
-      console.log(arrReqData);
-      
-      for(let reqData of arrReqData){
-        console.log(reqData.id);
-        if(reqData.id == "name"){
-          NameCheck(reqData.value, res);
-        }
+      console.log("body : " + body);
+      console.log("arrData : "+arrData);      
+      //들어온 값으로 파일 생성
+        fs.writeFileSync(`./data/${arrData.name}.json`, JSON.stringify(arrData), 'utf8', (err) => {
+          if(err) {
+            console.log(err);
+          }
+        })
 
-        if(reqData.id === "cham"){
-          chamCheck(reqData.value, res);
-        }
-      }
       if(req.url === "/submit"){
-        createJson(req, res);
+        readHtml(req, res);
       }
       else{
         res.statusCode = 200;
@@ -101,7 +90,7 @@ function postMethod(req, res) {
   })
 }
 
-function createJson(req, res) {
+function readHtml(req, res) {
   fs.readFile(path.join(__dirname, "./public/submit.html"), (err, data) => {
     if (err) {
       res.writeHead(500, { "Content-Type": "text/plain" });
