@@ -85,7 +85,9 @@ function postMethod(req, res){
 
 //* 이름 검사 함수
 function NameCheck(value, res){
-  const name = memberNames.find(str => str === value);
+  const name = memberNames.find(function(str) {
+    return str === value;
+  });
   if(name){
     res.statusCode = 200;
     res.end();

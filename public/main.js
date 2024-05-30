@@ -1,19 +1,17 @@
-
-const nameMenu = document.getElementById('name.menu')
-const lineMenu = document.getElementById('line.menu')
-const championMenu = document.getElementById('champion.menu')
 const menus = {
-  name: nameMenu,
-  line: lineMenu,
-  cham: championMenu
+  name: document.getElementById('name.menu'),
+  line: document.getElementById('line.menu'),
+  cham: document.getElementById('champion.menu')
 };
 
 document.getElementById('name').addEventListener('input',sendReq);
 document.getElementById('line').addEventListener('input',sendReq);
 document.getElementById('cham').addEventListener('input',sendReq);
 
+// menus.key.addEventListener('input',sendReq);
+
 /**
- * * POST서버로 요청을 보내는 함수
+ * * POST서버로 요청을 보내고 받은 응답으로 함수를 실행
  */
 //promise값을 반환하는 비동기 함수
 async function sendReq(){
@@ -36,7 +34,7 @@ async function sendReq(){
     } else{
       menuOn(elem.id, false);
     }
-  })  
+  })
   .catch(err => {
     console.error("요청 중 오류 발생:", err);
     menuOn(false);
