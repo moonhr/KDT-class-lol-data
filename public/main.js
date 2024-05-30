@@ -56,25 +56,16 @@ function menuOn(id, isTurnOn) {
     menu.classList.add('menu20');
     menu.classList.remove('menu100');
   }
-console.dir(menu)
-  // todo 만들조건 : input태그에 값이 존재하는가? menu에 모두 menu100클래스가 들어있는가?
 
-  if (
-    document.getElementById('name').value !== undefined &&
-    document.getElementById('name').value !== null) {
-    console.log(1)
-    if (
-      document.getElementById('cham').value !== undefined &&
-      document.getElementById('cham').value !== null
-    ) {
-      console.log(2)
-      if (menu.classList.value === "menu menu100") {console.log('작동');}
-    }
+  // todo 만들조건 : input태그에 값이 존재하는가? menu에 모두 menu100클래스가 들어있는가?
+  if (menus.name.classList.value === "menu menu100" && menus.line.classList.value === "menu menu100" && menus.cham.classList.value === "menu menu100") {
+    document.getElementById('submit').classList.remove('hidden');
   }
+}
 
   // document.getElementById('cham').value !== "" && menu.classList.value === "menu100"){
   //   console.log('작동');
   //   document.getElementById('submit').classList.remove('hidden');
   // }
-}
+
 
