@@ -32,10 +32,6 @@ const server = http.createServer((req, res) => {
   }
 })
 
-
-
-
-
 /**
  * * post메서드
  */
@@ -55,11 +51,9 @@ function postMethod(req, res) {
         }
       })
 
-
       //json데이터 배열에 밀어넣기
       let jsondata = [];
       readData(jsondata);
-      // console.log(jsondata);
 
       //들어온 값 쪼개서 태그만들기
       let nameTagArr = [];
@@ -98,15 +92,13 @@ function postMethod(req, res) {
       </html>`;
 
       if (req.url === "/submit") {
-        // readHtml(req, res);
         fs.writeFileSync(`./public/submit.html`, submitHTML, "utf-8");
-        readHtml(req, res, submit);
+        readHtml(req, res);
       }
       else {
         res.statusCode = 200;
         res.end();
       }
-
     } catch (err) {
       res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
       res.end(JSON.stringify({ error: "잘못된 요청입니다." }));
