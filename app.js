@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const qs = require("querystring");
 const memberNames = require("./module/name.js");
-const chamName = require("./module/champion.json")
+const chamName = require("./module/champion.json");
 
 class ReqData {
   constructor(id, value){
@@ -28,7 +28,7 @@ const server = http.createServer((req, res) => {
   //* POST METHOD
   if (req.method === "POST") {
       if(req.url === "/check"){
-        postMethod_2(req, res);
+        postCheck(req, res);
       }
       else if(req.url === "/submit"){
         postMethod(req, res);
@@ -64,11 +64,10 @@ function postMethod(req, res) {
   req.on('end', () => {
     try {
       let arrData = decodeURI(body).split("&");
-
-      console.log("body : " + body);
-      console.log("arrData : "+arrData);      
+      let name = arrData[0].split('=')
+      
       //들어온 값으로 파일 생성
-        fs.writeFileSync(`./data/${arrData.name}.json`, JSON.stringify(arrData), 'utf8', (err) => {
+        fs.writeFileSync(`./data/${name[1]}.json`, JSON.stringify(arrData), 'utf8', (err) => {
           if(err) {
             console.log(err);
           }
@@ -102,7 +101,7 @@ function readHtml(req, res) {
   });
 }
 
-function postMethod_2(req, res) {
+function postCheck(req, res) {
   let body = "";
 
   req.on('data', (data) => body += data);
