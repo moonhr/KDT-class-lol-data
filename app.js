@@ -1,17 +1,11 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const qs = require("querystring");
-const memberNames = require("./module/name.js");
-const chamName = require("./module/champion.json");
 const readData = require('./readData.js');
-
-// class ReqData {
-//   constructor(id, value) {
-//     this.id = id;
-//     this.value = value;
-//   }
-// }
+const NameCheck = require('./module/nameCheck.js');
+const chamCheck = require('./module/chamCheck.js');
+const getMethod = require('./module/getMethod.js');
+const getJsonData = require('./module/getJsonData.js');
 
 //*서버 생성
 const server = http.createServer((req, res) => {
@@ -39,21 +33,7 @@ const server = http.createServer((req, res) => {
 
 
 
-/**
- * * get메서드
- */
-function getMethod(req, res, filePath, contentType) {
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
-      res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
-      res.end("404 Not Found: 요청하신 파일을 찾을 수 없습니다.");
-      console.log("오류 발생:", err);
-    } else {
-      res.writeHead(200, { "Content-Type": contentType });
-      res.end(data);
-    }
-  });
-}
+
 
 /**
  * * post메서드
@@ -66,13 +46,13 @@ function postMethod(req, res) {
     try {
       let arrData = decodeURI(body).split("&");
       let name = arrData[0].split('=')
-      
+
       //들어온 값으로 파일 생성
-        fs.writeFileSync(`./data/${name[1]}.json`, JSON.stringify(arrData), 'utf8', (err) => {
-          if(err) {
-            console.log(err);
-          }
-        })
+      fs.writeFileSync(`./data/${name[1]}.json`, JSON.stringify(arrData), 'utf8', (err) => {
+        if (err) {
+          console.log(err);
+        }
+      })
 
 
       //json데이터 배열에 밀어넣기
@@ -84,26 +64,13 @@ function postMethod(req, res) {
       let nameTagArr = [];
       let lineTagArr = [];
       let chamTagArr = [];
-      jsondata.forEach(element => {
-        let json = element
-        json.forEach(element => {
-          let elem = element.split(",")
-          //console.log(elem[0]);
-          // console.log(typeof elem[0]); 
-          if(elem[0].includes("name")){
-            nameTagArr.push(elem[0].split('=')[1])
-          }
-          if(elem[0].includes("line")){
-            lineTagArr.push(elem[0].split('=')[1])
-          }
-          if(elem[0].includes("cham")){
-            chamTagArr.push(elem[0].split('=')[1])
-          }
-        });
-      });
+      let tagArr = [nameTagArr, lineTagArr, chamTagArr];
+      let contentArr = ["name", "line", "cham"];
+
+      getJsonData(jsondata, tagArr, contentArr);
 
       let dataUl = [];
-      for(let i = 0; i < nameTagArr.length; i++){
+      for (let i = 0; i < nameTagArr.length; i++) {
         dataUl[i] = `<ul><li>${nameTagArr[i]}</li><li>${lineTagArr[i]}</li><li>${chamTagArr[i]}</li></ul>`
       }
 
@@ -124,10 +91,11 @@ function postMethod(req, res) {
           <div id="data-list-add">
             ${dataUl}
           </div>
+          <a href="./index.html">홈으로</a>
         </div>
       </body>
       </html>`;
-      
+
       if (req.url === "/submit") {
         // readHtml(req, res);
         fs.writeFileSync(`./public/submit.html`, submitHTML, "utf-8");
@@ -191,38 +159,8 @@ function postCheck(req, res) {
   })
 }
 
-//* 이름 검사 함수
-function NameCheck(value, res) {
-  const name = memberNames.find(function (str) {
-    return str === value;
-  });
 
-  if (!name) {
-    throw new Error("이름이 없습니다.");
-  }
-}
 
-//* 챔피언 검사 함수
-function chamCheck(value, res) {
-  //* 챔피언 이름만 담을 빈 배열 만들기
-  let chams = [];
-  //* json 데이터에서 이름 객체 뽑아서 배열에 밀어넣기
-  for (let data in chamName) {
-    if (data === "data") {
-      for (let a in chamName[data]) {
-        for (let b in chamName[data][a]) {
-          if (b === 'name') {
-            chams.push(chamName[data][a][b]);
-          }
-        }
-      }
-    }
-  }
-  const cham = chams.find(str => str === value);
-  if (!cham) {
-    throw new Error("존재하는 챔피언이 없습니다.");
-  }
-}
 
 
 //*문서 형식에 따른 표기
