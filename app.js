@@ -64,6 +64,17 @@ function postMethod(req, res) {
   req.on('data', (data) => body += data);
   req.on('end', () => {
     try {
+      let arrData = decodeURI(body).split("&");
+      let name = arrData[0].split('=')
+      
+      //들어온 값으로 파일 생성
+        fs.writeFileSync(`./data/${name[1]}.json`, JSON.stringify(arrData), 'utf8', (err) => {
+          if(err) {
+            console.log(err);
+          }
+        })
+
+
       //json데이터 배열에 밀어넣기
       let jsondata = [];
       readData(jsondata);
@@ -120,11 +131,7 @@ function postMethod(req, res) {
       if (req.url === "/submit") {
         // readHtml(req, res);
         fs.writeFileSync(`./public/submit.html`, submitHTML, "utf-8");
-        fs.readFileSync(path.join(__dirname, `./public/submit.html`), (err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
+        readHtml(req, res);
       }
       else {
         res.statusCode = 200;
@@ -139,7 +146,7 @@ function postMethod(req, res) {
   })
 }
 
-//지금 안씀
+
 function readHtml(req, res) {
   fs.readFile(path.join(__dirname, "./public/submit.html"), (err, data) => {
     if (err) {
