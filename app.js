@@ -139,14 +139,6 @@ function postMethod(req, res) {
   })
 }
 
-function readJSON (name){
-  fs.readFile(path.join(__dirname, `./data/${name}.json`), (err) => {
-    if (err) {
-      console.log(err);
-    }
-  })
-}
-
 //지금 안씀
 function readHtml(req, res) {
   fs.readFile(path.join(__dirname, "./public/submit.html"), (err, data) => {
