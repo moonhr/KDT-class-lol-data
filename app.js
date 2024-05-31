@@ -4,13 +4,14 @@ const path = require("path");
 const qs = require("querystring");
 const memberNames = require("./module/name.js");
 const chamName = require("./module/champion.json");
+const readData = require('./readData.js');
 
-class ReqData {
-  constructor(id, value) {
-    this.id = id;
-    this.value = value;
-  }
-}
+// class ReqData {
+//   constructor(id, value) {
+//     this.id = id;
+//     this.value = value;
+//   }
+// }
 
 //*서버 생성
 const server = http.createServer((req, res) => {
@@ -63,32 +64,67 @@ function postMethod(req, res) {
   req.on('data', (data) => body += data);
   req.on('end', () => {
     try {
-      //들어온 데이터 배열 자르기
-      let arrData = decodeURI(body).split("&");
-      let name = arrData[0].split('=')
-      let line = arrData[1].split('=')
-      let cham = arrData[2].split('=')
+      //json데이터 배열에 밀어넣기
+      let jsondata = [];
+      readData(jsondata);
+      // console.log(jsondata);
 
-      //들어온 값으로 json 파일 생성
-      fs.writeFileSync(`./data/${name[1]}.json`, JSON.stringify(arrData), 'utf8', (err) => {
-        if (err) {
-          console.log(err);
-        }
-      })
+      //들어온 값 쪼개서 태그만들기
+      let nameTagArr = [];
+      let lineTagArr = [];
+      let chamTagArr = [];
+      jsondata.forEach(element => {
+        let json = element
+        json.forEach(element => {
+          let elem = element.split(",")
+          //console.log(elem[0]);
+          // console.log(typeof elem[0]); 
+          if(elem[0].includes("name")){
+            nameTagArr.push(elem[0].split('=')[1])
+          }
+          if(elem[0].includes("line")){
+            lineTagArr.push(elem[0].split('=')[1])
+          }
+          if(elem[0].includes("cham")){
+            chamTagArr.push(elem[0].split('=')[1])
+          }
+        });
+      });
 
-      //들어온 값 태그로 만들기
-      if(name[0] == "name"){
-        let nameTag = `<h4>${name[1]}</h4>`
-      }
-      if(line[0] == "line"){
-        let lineTag = `<h4>${line[1]}</h4>`
-      }
-      if(cham[0] == "cham"){
-        let chamTag = `<h4>${cham[1]}</h4>`
+      let dataUl = [];
+      for(let i = 0; i < nameTagArr.length; i++){
+        dataUl[i] = `<ul><li>${nameTagArr[i]}</li><li>${lineTagArr[i]}</li><li>${chamTagArr[i]}</li></ul>`
       }
 
+      const submitHTML = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+      </head>
+      <body>
+        <div id="root">
+          <h1 id="title">What’s your position?</h1>
+          <div>
+            <h2>DATALIST</h2>
+          </div>
+          <div id="data-list-add">
+            ${dataUl}
+          </div>
+        </div>
+      </body>
+      </html>`;
+      
       if (req.url === "/submit") {
-        readHtml(req, res);
+        // readHtml(req, res);
+        fs.writeFileSync(`./public/submit.html`, submitHTML, "utf-8");
+        fs.readFileSync(path.join(__dirname, `./public/submit.html`), (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
       }
       else {
         res.statusCode = 200;
@@ -103,6 +139,15 @@ function postMethod(req, res) {
   })
 }
 
+function readJSON (name){
+  fs.readFile(path.join(__dirname, `./data/${name}.json`), (err) => {
+    if (err) {
+      console.log(err);
+    }
+  })
+}
+
+//지금 안씀
 function readHtml(req, res) {
   fs.readFile(path.join(__dirname, "./public/submit.html"), (err, data) => {
     if (err) {
