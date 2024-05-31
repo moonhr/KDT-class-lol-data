@@ -89,6 +89,7 @@ function postMethod(req, res) {
           <a href="./index.html">홈으로</a>
         </div>
       </body>
+      <script src="./submit.js"></script>
       </html>`;
 
       if (req.url === "/submit") {
