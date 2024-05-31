@@ -6,7 +6,7 @@ const memberNames = require("./module/name.js");
 const chamName = require("./module/champion.json");
 
 class ReqData {
-  constructor(id, value){
+  constructor(id, value) {
     this.id = id;
     this.value = value;
   }
@@ -27,12 +27,12 @@ const server = http.createServer((req, res) => {
   }
   //* POST METHOD
   if (req.method === "POST") {
-      if(req.url === "/check"){
-        postCheck(req, res);
-      }
-      else if(req.url === "/submit"){
-        postMethod(req, res);
-      }
+    if (req.url === "/check") {
+      postCheck(req, res);
+    }
+    else if (req.url === "/submit") {
+      postMethod(req, res);
+    }
   }
 })
 
@@ -63,20 +63,34 @@ function postMethod(req, res) {
   req.on('data', (data) => body += data);
   req.on('end', () => {
     try {
+      //들어온 데이터 배열 자르기
       let arrData = decodeURI(body).split("&");
       let name = arrData[0].split('=')
-      
-      //들어온 값으로 파일 생성
-        fs.writeFileSync(`./data/${name[1]}.json`, JSON.stringify(arrData), 'utf8', (err) => {
-          if(err) {
-            console.log(err);
-          }
-        })
+      let line = arrData[1].split('=')
+      let cham = arrData[2].split('=')
 
-      if(req.url === "/submit"){
+      //들어온 값으로 json 파일 생성
+      fs.writeFileSync(`./data/${name[1]}.json`, JSON.stringify(arrData), 'utf8', (err) => {
+        if (err) {
+          console.log(err);
+        }
+      })
+
+      //들어온 값 태그로 만들기
+      if(name[0] == "name"){
+        let nameTag = `<h4>${name[1]}</h4>`
+      }
+      if(line[0] == "line"){
+        let lineTag = `<h4>${line[1]}</h4>`
+      }
+      if(cham[0] == "cham"){
+        let chamTag = `<h4>${cham[1]}</h4>`
+      }
+
+      if (req.url === "/submit") {
         readHtml(req, res);
       }
-      else{
+      else {
         res.statusCode = 200;
         res.end();
       }
@@ -96,7 +110,7 @@ function readHtml(req, res) {
       res.end("500 code는 서버 자체의 에러");
       return;
     }
-    res.writeHead(200, {"Content-Type": "text/html;"});
+    res.writeHead(200, { "Content-Type": "text/html;" });
     res.end(data);
   });
 }
@@ -108,7 +122,7 @@ function postCheck(req, res) {
   req.on('end', () => {
     try {
       let elem = JSON.parse(body);
-  
+
       let id = elem.id;
       let value = elem.value;
 
@@ -116,7 +130,7 @@ function postCheck(req, res) {
         NameCheck(value, res);
       }
 
-      if(id == "cham"){
+      if (id == "cham") {
         chamCheck(value, res);
       }
       else if (id == "cham") {
@@ -139,7 +153,7 @@ function NameCheck(value, res) {
     return str === value;
   });
 
-  if(!name){
+  if (!name) {
     throw new Error("이름이 없습니다.");
   }
 }
@@ -161,7 +175,7 @@ function chamCheck(value, res) {
     }
   }
   const cham = chams.find(str => str === value);
-  if(!cham){
+  if (!cham) {
     throw new Error("존재하는 챔피언이 없습니다.");
   }
 }
