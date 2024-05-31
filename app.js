@@ -6,6 +6,7 @@ const NameCheck = require('./module/nameCheck.js');
 const chamCheck = require('./module/chamCheck.js');
 const getMethod = require('./module/getMethod.js');
 const getJsonData = require('./module/getJsonData.js');
+const readHtml = require('./module/readHtml.js');
 
 //*서버 생성
 const server = http.createServer((req, res) => {
@@ -99,7 +100,7 @@ function postMethod(req, res) {
       if (req.url === "/submit") {
         // readHtml(req, res);
         fs.writeFileSync(`./public/submit.html`, submitHTML, "utf-8");
-        readHtml(req, res);
+        readHtml(req, res, submit);
       }
       else {
         res.statusCode = 200;
@@ -114,18 +115,6 @@ function postMethod(req, res) {
   })
 }
 
-
-function readHtml(req, res) {
-  fs.readFile(path.join(__dirname, "./public/submit.html"), (err, data) => {
-    if (err) {
-      res.writeHead(500, { "Content-Type": "text/plain" });
-      res.end("500 code는 서버 자체의 에러");
-      return;
-    }
-    res.writeHead(200, { "Content-Type": "text/html;" });
-    res.end(data);
-  });
-}
 
 function postCheck(req, res) {
   let body = "";
