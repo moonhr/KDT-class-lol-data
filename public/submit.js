@@ -1,11 +1,13 @@
 const ul = document.getElementsByTagName('ul');
 
-ul.addEventListener('click', () => {
-  let del = confirm("삭제하시겠습니까?")
+for(let i = 0; i < ul.length; i++){
+ul[i].addEventListener('click', () => {
+  confirm("삭제하시겠습니까?");
   if (del) {
     sendReq();
   }
 })
+}
 
 //delete method는 body가 필요 없음
 async function sendReq(id) {
