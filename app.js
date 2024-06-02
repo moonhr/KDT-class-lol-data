@@ -30,7 +30,7 @@ const server = http.createServer((req, res) => {
       postMethod(req, res);
     }
   }
-  if(req.method === "DELETE" && req.url == "/delete"){
+  if(req.method === "DELETE" && path.startsWith('/delete')){
     deleteJson();
   }
 })

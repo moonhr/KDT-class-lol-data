@@ -1,12 +1,13 @@
 const ul = document.getElementsByTagName('ul');
 
-for(let i = 0; i < ul.length; i++){
-ul[i].addEventListener('click', () => {
-  confirm("삭제하시겠습니까?");
-  if (del) {
-    sendReq();
-  }
-})
+for (let i = 0; i < ul.length; i++) {
+  ul[i].addEventListener('click', () => {
+    if (confirm("삭제하시겠습니까?")) {
+      sendReq();
+    } else {
+      alert("취소됨");
+    }
+  })
 }
 
 //delete method는 body가 필요 없음
