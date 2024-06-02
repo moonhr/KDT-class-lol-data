@@ -30,7 +30,19 @@ const server = http.createServer((req, res) => {
       postMethod(req, res);
     }
   }
+  if(req.method === "DELETE" && req.url == "/delete"){
+    deleteJson();
+  }
 })
+
+function deleteJson(){
+  let arrData = decodeURI(body).split("&");
+  console.log(arrData);
+}
+
+
+
+
 
 /**
  * * post메서드
