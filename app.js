@@ -31,13 +31,18 @@ const server = http.createServer((req, res) => {
     }
   }
   if(req.method === "DELETE" && path.startsWith('/delete')){
-    deleteJson();
+    deleteJson(req, res);
   }
 })
 
-function deleteJson(){
-  let arrData = decodeURI(body).split("&");
-  console.log(arrData);
+function deleteJson(req, res){
+  // 1. 요청 id(이벤트타켓)이 json파일의 명에 존재하면
+  // 2. 해당 json파일을 삭제한다
+
+  //문제점 json주소가 서버로 인코딩되어 들어온다.
+  const jsonData = fs.readFileSync(`./data/${id}.json`)
+  console.log(jsonData)
+  
 }
 
 
@@ -206,6 +211,6 @@ server.listen(port, (err) => {
   if (err) {
     console.log("오류:", err);
   } else {
-    console.log(`Server is running on port ${port}`);
+    console.log(`http://localhost:${port}`);
   }
 });
