@@ -31,7 +31,7 @@ const server = http.createServer((req, res) => {
       postMethod(req, res);
     }
   }
-  if(req.method === "DELETE" && path.startsWith('/delete')){
+  if(req.method === "DELETE"){
     deleteJson(req, res);
   }
 })
@@ -43,10 +43,13 @@ function deleteJson(req, res){
   //문제점 json주소가 서버로 인코딩되어 들어온다.
   const jsonName = [];
   dataJsonName(jsonName);
-  let id;
-  
-  const jsonData = fs.readFileSync(`./data/${id}.json`)
-  console.log(jsonData);
+  console.log(req.url)
+  let fileName = req.url.split('/')[2]
+  console.log("디코드전" + fileName)
+  fileName = decodeURI(fileName);
+  console.log("디코드후"+fileName)
+  // const jsonData = fs.readFileSync(`./data/${}.json`)
+
 
 }
 
