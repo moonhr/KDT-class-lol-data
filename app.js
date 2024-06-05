@@ -7,6 +7,7 @@ const chamCheck = require('./module/chamCheck.js');
 const getMethod = require('./module/getMethod.js');
 const getJsonData = require('./module/getJsonData.js');
 const readHtml = require('./module/readHtml.js');
+const dataJsonName = require('./module/dataJsonName.js')
 
 //*서버 생성
 const server = http.createServer((req, res) => {
@@ -40,9 +41,13 @@ function deleteJson(req, res){
   // 2. 해당 json파일을 삭제한다
 
   //문제점 json주소가 서버로 인코딩되어 들어온다.
-  const jsonData = fs.readFileSync(`./data/${id}.json`)
-  console.log(jsonData)
+  const jsonName = [];
+  dataJsonName(jsonName);
+  let id;
   
+  const jsonData = fs.readFileSync(`./data/${id}.json`)
+  console.log(jsonData);
+
 }
 
 
