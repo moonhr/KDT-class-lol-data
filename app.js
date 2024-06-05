@@ -11,7 +11,6 @@ const dataJsonName = require('./module/dataJsonName.js')
 
 //*서버 생성
 const server = http.createServer((req, res) => {
-  let url = req.url;
   if (req.url === "/favicon.ico") return;
   //*filePath라는 변수를 getFilePath에 req.url을 매개변수로 삽입한 값으로 할당
   let filePath = fileUtils.getFilePath(url);
@@ -43,14 +42,19 @@ function deleteJson(req, res){
   //문제점 json주소가 서버로 인코딩되어 들어온다.
   const jsonName = [];
   dataJsonName(jsonName);
-  console.log(req.url)
+  //req.url값을 decode하기
   let fileName = req.url.split('/')[2]
-  console.log("디코드전" + fileName)
   fileName = decodeURI(fileName);
+
+  jsonName.forEach(element => {
+    if(element == fileName){
+      console.log(element)
+    }
+  });
+
   console.log("디코드후"+fileName)
   // const jsonData = fs.readFileSync(`./data/${}.json`)
-
-
+  
 }
 
 
