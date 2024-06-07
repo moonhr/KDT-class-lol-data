@@ -1,5 +1,6 @@
 const ul = document.getElementsByTagName('ul');
 const li = document.getElementsByTagName('li');
+const dataListAdd = document.getElementById("data-list-add");
 
 for (let i = 0; i < ul.length; i++) {
   ul[i].addEventListener('click', (e) => {
@@ -36,6 +37,9 @@ async function sendReq(id) {
     })
     // 서버 응답의 상태 코드를 확인
     if (res.status == 200) {
+      //성공 반환시 해당 html 태그를 삭제
+      //todo 해당 ul을 통째로 지울 수 있어야함 매개변수로 들어오는 id의 경우 무조건 해당 ul을 가르키게 되어있으니 이를 이용
+      dataListAdd.removeChild(id);
       alert("삭제되었습니다.")
     } else {
       alert("삭제실패")
