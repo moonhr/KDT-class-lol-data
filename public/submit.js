@@ -11,11 +11,14 @@ for (let i = 0; i < ul.length; i++) {
       if(e.target.tagName === "UL"){
         id = e.target.children[0].innerHTML
         console.log("ul찍힘"+id)
+        e.target.remove();
+
       } 
       //이벤트타겟 태그가 li라면
       else if (e.target.tagName === "LI") {
         id = e.target.parentNode.children[0].innerHTML
         console.log("li찍힘"+id)
+        e.target.parentNode.remove();
       }
       sendReq(id);
     } else {
@@ -39,7 +42,6 @@ async function sendReq(id) {
     if (res.status == 200) {
       //성공 반환시 해당 html 태그를 삭제
       //todo 해당 ul을 통째로 지울 수 있어야함 매개변수로 들어오는 id의 경우 무조건 해당 ul을 가르키게 되어있으니 이를 이용
-      dataListAdd.removeChild(id);
       alert("삭제되었습니다.")
     } else {
       alert("삭제실패")

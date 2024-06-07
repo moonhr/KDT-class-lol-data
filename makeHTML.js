@@ -22,6 +22,8 @@ function makeHTML(req, res){
         for (let i = 0; i < nameTagArr.length; i++) {
           dataUl[i] = `<ul><li>${nameTagArr[i]}</li><li>${lineTagArr[i]}</li><li>${chamTagArr[i]}</li></ul>`
         }
+        let data = dataUl.join("")
+
   
         const submitHTML = `
         <!DOCTYPE html>
@@ -38,7 +40,7 @@ function makeHTML(req, res){
               <h2>DATALIST</h2>
             </div>
             <div id="data-list-add">
-              ${dataUl}
+              ${data}
             </div>
             <a href="./index.html">홈으로</a>
           </div>
