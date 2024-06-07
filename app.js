@@ -49,7 +49,6 @@ function deleteJson(req, res) {
       if (element == fileName) {
         fs.unlink(`./data/${fileName}.json`, (error) => { console.log(error) })
         //json값으로 html만들고 읽기
-        makeHTML(req, res);
         res.statusCode = 200;
         res.end();
       }
