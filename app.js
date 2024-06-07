@@ -5,7 +5,7 @@ const NameCheck = require('./module/nameCheck.js');
 const chamCheck = require('./module/chamCheck.js');
 const getMethod = require('./module/getMethod.js');
 const dataJsonName = require('./module/dataJsonName.js');
-const makeHTML = require('./makeHTML.js');
+const makeHTML = require('./module/makeHTML.js');
 
 //*서버 생성
 const server = http.createServer((req, res) => {

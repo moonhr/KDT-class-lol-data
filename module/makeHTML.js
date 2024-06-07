@@ -1,6 +1,6 @@
-const readData = require('./readData')
-const getJsonData = require('./module/getJsonData.js')
-const readHtml = require('./module/readHtml.js')
+const readData = require('./readData.js')
+const getJsonData = require('./getJsonData.js')
+const readHtml = require('./readHtml.js')
 const fs = require('fs')
 
 
