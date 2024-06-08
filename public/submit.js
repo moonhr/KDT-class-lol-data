@@ -32,7 +32,7 @@ for (let i = 0; i < ul.length; i++) {
 //delete method는 body가 필요 없음
 //삭제 요청 보내는 함수 id를 인수로 받는 비동기함수
 /**
- * * 서버로 요청 -> 응답시 반응
+ * * DELETE 서버로 요청을 보내고 받은 응답으로 함수를 실행
  * @param {Event.target} id 
  */
 async function sendReq(id) {
