@@ -19,7 +19,7 @@ const server = http.createServer((req, res) => {
   if (req.method === "GET") {
     getMethod(req, res, filePath, contentType);
   }
-  //* POST METHOD
+
   if (req.method === "POST") {
     if (req.url === "/check") {
       postCheck(req, res);
@@ -33,22 +33,30 @@ const server = http.createServer((req, res) => {
   }
 })
 
+/**
+ * * DELETE메서드일 때 실행될 함수
+ * * json을 삭제하는 역할
+ * @param {요청} req 
+ * @param {응답} res 
+ */
 function deleteJson(req, res) {
   // 1. 요청 id(이벤트타켓)이 json파일의 명에 존재하면
   // 2. 해당 json파일을 삭제한다
 
-  //문제점 json주소가 서버로 인코딩되어 들어온다.
+  // ? json주소가 서버로 인코딩되어 들어온다.
   const jsonName = [];
   dataJsonName(jsonName);
+
   //req.url값을 decode하기
   let fileName = req.url.split('/')[2]
   fileName = decodeURI(fileName);
+
   jsonName.forEach(element => {
     //JSON 파일을 삭제
     try {
       if (element == fileName) {
+        //파일 삭제
         fs.unlink(`./data/${fileName}.json`, (error) => { console.log(error) })
-        //json값으로 html만들고 읽기
         res.statusCode = 200;
         res.end();
       }
@@ -58,10 +66,6 @@ function deleteJson(req, res) {
       console.log("오류 발생:", err);
     }
   });
-
-  // console.log("디코드후"+fileName)
-  // const jsonData = fs.readFileSync(`./data/${}.json`)
-
 }
 
 
@@ -69,7 +73,10 @@ function deleteJson(req, res) {
 
 
 /**
- * * post메서드
+ * * POST 메서드일 때 실행될 함수
+ * * data의 json을 읽어 새로운 html을 만들고 /submit으로 내보냄
+ * @param {요청} req 
+ * @param {응답} res 
  */
 function postMethod(req, res) {
   let body = "";
@@ -97,13 +104,19 @@ function postMethod(req, res) {
   })
 }
 
-
+/**
+ * * /check로 들어올 때 실행되는 함수
+ * * input에 들어온 name, champion이 데이터의 값과 일치하는지 확인함
+ * @param {요청} req 
+ * @param {응답} res 
+ */
 function postCheck(req, res) {
   let body = "";
 
   req.on('data', (data) => body += data);
   req.on('end', () => {
     try {
+      //들어온 값 json으로 정리
       let elem = JSON.parse(body);
 
       let id = elem.id;
@@ -116,12 +129,10 @@ function postCheck(req, res) {
       if (id == "cham") {
         chamCheck(value, res);
       }
-      else if (id == "cham") {
-        chamCheck(value, res);
-      }
 
       res.statusCode = 200;
       res.end();
+
     } catch (err) {
       res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
       res.end(JSON.stringify({ error: "잘못된 요청입니다." }));
