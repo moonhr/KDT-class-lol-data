@@ -11,17 +11,26 @@ body {
   overflow: hidden;
 }
 body h1 {
-  position: absolute;
-  top: 10%;
-  left: 63%;
-  font-size: 5.5em;
-  font-weight: 400;
   color: rgba(255, 255, 255, 0.2);
   transform: rotate(-90deg);
+  position: absolute;
+  top: 20%;
+  left: 63%;
+  white-space: nowrap;
+  font-size: 5.5em;
+  font-weight: 400;
   width: 70%;
 }
 body form {
   margin: 20px;
+}
+
+.container {
+  width: 50%;
+  height: 80%;
+  display: grid;
+  grid-template-rows: repeat(6, 2fr 1fr);
+  margin-left: 30px;
 }
 
 .search {
@@ -29,6 +38,30 @@ body form {
   padding: 2em;
   border-radius: 100px;
   color: black;
+  margin-top: -20px;
+  width: 60%;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.3em;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.3em;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+select {
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .menu {
@@ -47,4 +80,16 @@ body form {
 
 .hidden {
   display: none;
+}
+
+.button {
+  width: 0;
+  height: 0;
+  border-bottom: 60px solid transparent;
+  border-top: 60px solid transparent;
+  border-left: 100px solid #F2FF5E;
+  background-color: transparent;
+  position: absolute;
+  top: 40%;
+  left: 75%;
 }/*# sourceMappingURL=style.css.map */

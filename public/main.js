@@ -58,7 +58,7 @@ function menuOn(id, isTurnOn) {
   }
 
   // todo 만들조건 : menu에 모두 menu100클래스가 들어있는가?
-  if (menus.name.classList.value === "menu menu100" && menus.line.classList.value === "menu menu100" && menus.cham.classList.value === "menu menu100") {
+  if (menus.name.classList.value === "menu menu100" && menus.line.classList.value === "menu menu100" && menus.cham.classList.value === "menu menu100" && document.getElementById('line').value !== "none") {
     document.getElementById('submit').classList.remove('hidden');
   } else {
     document.getElementById('submit').classList.add('hidden');

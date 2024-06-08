@@ -1,52 +1,94 @@
-*{
+* {
   margin: 0;
   padding: 0;
 }
-body{
+
+body {
   width: 100vw;
   height: 100vh;
   background-color: #22212B;
   position: relative;
   overflow: hidden;
 
-  h1{
+  h1 {
+    color: rgba(255, 255, 255, 0.2);
+    transform: rotate(-90deg);
     position: absolute;
-    top: 10%;
+    top: 20%;
     left: 63%;
+    white-space: nowrap;
     font-size: 5.5em;
     font-weight: 400;
-    color: rgba(255,255,255, 0.2);
-    transform: rotate(-90deg);
     width: 70%;
-
   }
 
-  form{
+  form {
     margin: 20px;
   }
-
 }
 
-.search{
+
+
+.container {
+  width: 50%;
+  height: 80%;
+  display: grid;
+  grid-template-rows: repeat(6, 2fr 1fr);
+  margin-left: 30px;
+}
+
+.search {
   background-color: #9BDBFF;
   padding: 2em;
   border-radius: 100px;
   color: black;
+  margin-top: -20px;
+  width: 60%;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.menu{
-  color: rgba(255,255,255, 0.5);
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.3em;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+select {
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.menu {
+  color: rgba(255, 255, 255, 0.5);
   font-size: 7em;
   font-weight: 900;
 }
 
-.menu100{
-  color: rgb(255,255,255);
-}
-.menu20{
-  color: rgba(255,255,255,0.2);
+.menu100 {
+  color: rgb(255, 255, 255);
 }
 
-.hidden{
+.menu20 {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.hidden {
   display: none;
+}
+
+.button {
+  width: 0;
+  height: 0;
+  border-bottom: 60px solid transparent;
+  border-top: 60px solid transparent;
+  border-left: 100px solid #F2FF5E;
+  background-color: transparent;
+  position: absolute;
+  top: 40%;
+  left: 75%;
 }
