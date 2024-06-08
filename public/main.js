@@ -15,6 +15,7 @@ document.getElementById('cham').addEventListener('input', sendReq);
  */
 //promise값을 반환하는 비동기 함수
 async function sendReq() {
+  //this는 이벤트가 실행된 각각의 객체
   let elem = this;
   //http 요청 생성
   await fetch("http://localhost:8080/check", {
@@ -57,7 +58,8 @@ function menuOn(id, isTurnOn) {
     menu.classList.remove('menu100');
   }
 
-  // todo 만들조건 : menu에 모두 menu100클래스가 들어있는가?
+  // todo 만들조건 : menu에 모두 menu100클래스가 들어있는가? + input line의 값이 none이 아닌가?
+  // * 모두 참이면 버튼의 hidden 클래스 제거
   if (menus.name.classList.value === "menu menu100" && menus.line.classList.value === "menu menu100" && menus.cham.classList.value === "menu menu100" && document.getElementById('line').value !== "none") {
     document.getElementById('submit').classList.remove('hidden');
   } else {
