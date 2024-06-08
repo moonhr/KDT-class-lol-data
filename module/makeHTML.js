@@ -3,7 +3,13 @@ const getJsonData = require('./getJsonData.js')
 const readHtml = require('./readHtml.js')
 const fs = require('fs')
 
-
+/**
+ * * data에 존재하는 json값을 각 배열에 정리하고
+ * * 만들어진 배열로 태그로 정리해 html 만들기
+ * * 만들어진 html을 /submit일 떄 읽음
+ * @param {요청} req 
+ * @param {응답} res 
+ */
 function makeHTML(req, res) {
   //json데이터 배열에 밀어넣기
   let jsondata = [];
@@ -22,8 +28,8 @@ function makeHTML(req, res) {
   for (let i = 0; i < nameTagArr.length; i++) {
     dataUl[i] = `<ul><li>${nameTagArr[i]}</li><li>${lineTagArr[i]}</li><li>${chamTagArr[i]}</li></ul>`
   }
+  //배열 사이에 ,가 안나오게 수정함
   let data = dataUl.join("")
-
 
   const submitHTML = `
         <!DOCTYPE html>
