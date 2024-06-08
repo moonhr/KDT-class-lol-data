@@ -43,7 +43,7 @@ function makeHTML(req, res) {
           </div>
             <div id="data-list-add">
               ${data}
-              <div class="box" onclick="location.href='./index.html'"></div>
+              <div class="box" onclick="location.href='./index.html'">NEW</div>
             </div>
             <a href="./index.html">홈으로</a>
           </div>
