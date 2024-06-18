@@ -1,11 +1,9 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-
 const getMethod = require('./module/getMethod.js');
 const postMethod = require('./module/postMethod.js');
 const deleteJson = require('./module/deleteJson.js');
-
 
 //*서버 생성
 const server = http.createServer((req, res) => {
@@ -32,9 +30,6 @@ const server = http.createServer((req, res) => {
     deleteJson(req, res);
   }
 })
-
-
-
 
 //*문서 형식에 따른 표기
 const mimeType = {
@@ -77,7 +72,6 @@ const fileUtils = {
     }
   },
 };
-
 
 // 서버를 포트 8080에서 시작
 const port = 8080;
