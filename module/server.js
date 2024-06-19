@@ -1,8 +1,11 @@
 const http = require("http");
+const fs = require("fs");
 const getMethod = require('./getMethod.js');
 const postMethod = require('./postMethod.js');
 const deleteJson = require('./deleteJson.js');
 const fileUtils = require('./fileUtils.js');
+const createDatabase = require('./DB/createDatabase.js');
+
 
 /**
  * * 서버생성
@@ -17,6 +20,13 @@ const server = http.createServer((req, res) => {
   let contentType = fileUtils.getContentType(ext);
   if (req.method === "GET") {
     getMethod(req, res, filePath, contentType);
+    if (req.url === '/') {
+      createDatabase((err) => {
+        if (err) {
+          console.error(err.message);
+        }
+      })
+    }
   }
 
   if (req.method === "POST") {

@@ -14,4 +14,4 @@ const deleteUser = (id, callback) => {
   });
 }
 
-module.exports = deleteUser;
+// module.exports = deleteUser;

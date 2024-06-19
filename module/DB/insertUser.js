@@ -1,6 +1,6 @@
 const createDatabase = require('./createDatabase');
 
-const  insertUser = (data, callback) => {
+function insertUser(data, callback){
   createDatabase((err, db) => {
       if (err) {
           return callback(err);

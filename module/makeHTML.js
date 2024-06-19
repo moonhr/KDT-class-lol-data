@@ -68,3 +68,12 @@ function makeHTML(req, res) {
 }
 
 module.exports = makeHTML;
+
+
+
+let obj = {name : "문혜림", age : "26"};
+const {name, age} = obj;
+console.log(name) //문혜림 출력
+
+// 객체의 프로퍼티를 부르는 방법(구조분해)
+// 해당방식으로 만들어진 배열의 프로퍼티를 db에 삽입하는 방법

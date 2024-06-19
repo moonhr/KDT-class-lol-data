@@ -12,4 +12,4 @@ const getUsers = (callback) => {
   });
 }
 
-module.exports = getUsers;
+// module.exports = getUsers;

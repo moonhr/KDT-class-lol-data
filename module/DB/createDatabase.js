@@ -1,5 +1,8 @@
-const createDatabase = (callback) => {
+const sqlite3 = require('sqlite3').verbose();
+
+function createDatabase(callback) {
     let db = new sqlite3.Database('lolData.db', (err) => {
+        console.log('db생성')
         if (err) {
             return callback(err);
         }
