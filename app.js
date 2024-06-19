@@ -29,7 +29,7 @@ db.run(`CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         line TEXT NOT NULL,
-        champ TEXT NOT NULL
+        cham TEXT NOT NULL
     )`);
 
 // 데이터 삽입 (Create)

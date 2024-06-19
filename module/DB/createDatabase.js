@@ -1,5 +1,5 @@
 const createDatabase = (callback) => {
-    let db = new sqlite3.Database('example.db', (err) => {
+    let db = new sqlite3.Database('lolData.db', (err) => {
         if (err) {
             return callback(err);
         }
@@ -7,7 +7,7 @@ const createDatabase = (callback) => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         line TEXT NOT NULL,
-        champ TEXT NOT NULL
+        cham TEXT NOT NULL
         )`, (err) => {
             callback(err, db);
         });
