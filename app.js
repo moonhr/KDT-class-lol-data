@@ -1,4 +1,4 @@
-const path = require("path");
+// const path = require("path");
 const getMethod = require("./module/getMethod.js");
 const postMethod = require("./module/postMethod.js");
 const deleteJson = require("./module/deleteJson.js");
@@ -21,9 +21,9 @@ const mimeType = {
 const fileUtils = {
   getFilePath: function (url) {
     if (url === "/") {
-      return path.join(__dirname, "./index.html");
+      return "public/index.html";
     } else {
-      return path.join(__dirname, `./public${url}`);
+      return `public${url}`;
     }
   },
   getFileExtension: function (filePath) {
