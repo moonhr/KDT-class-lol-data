@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sqlite3": "^5.1.7"
+    "dotenv": "^16.4.5"
   }
 }
