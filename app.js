@@ -1,9 +1,12 @@
 const http = require("http");
-const fs = require("fs");
+const dotenv = require("dotenv");
 const path = require("path");
-const getMethod = require('./module/getMethod.js');
-const postMethod = require('./module/postMethod.js');
-const deleteJson = require('./module/deleteJson.js');
+const getMethod = require("./module/getMethod.js");
+const postMethod = require("./module/postMethod.js");
+const deleteJson = require("./module/deleteJson.js");
+const postCheck = require("./module/postCheck.js");
+
+dotenv.config();
 
 //*서버 생성
 const server = http.createServer((req, res) => {
@@ -21,15 +24,14 @@ const server = http.createServer((req, res) => {
   if (req.method === "POST") {
     if (req.url === "/check") {
       postCheck(req, res);
-    }
-    else if (req.url === "/submit") {
+    } else if (req.url === "/submit") {
       postMethod(req, res);
     }
   }
   if (req.method === "DELETE") {
     deleteJson(req, res);
   }
-})
+});
 
 //*문서 형식에 따른 표기
 const mimeType = {
@@ -50,7 +52,7 @@ const fileUtils = {
   getFilePath: function (url) {
     // URL에 따라 파일 경로를 설정
     if (url === "/") {
-      return path.join(__dirname, "./public/index.html");
+      return path.join(__dirname, "./index.html");
     } else {
       return path.join(__dirname, `./public${url}`);
     }
@@ -74,11 +76,7 @@ const fileUtils = {
 };
 
 // 서버를 포트 8080에서 시작
-const port = 8080;
-server.listen(port, (err) => {
-  if (err) {
-    console.log("오류:", err);
-  } else {
-    console.log(`http://localhost:${port}`);
-  }
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
+  console.log(`서버가 포트 ${port}에서 실행 중입니다.`);
 });
